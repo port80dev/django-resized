@@ -88,6 +88,7 @@ class ResizedImageFieldFile(ImageField.attr_class):
         ImageFile.MAXBLOCK = max(ImageFile.MAXBLOCK, thumb.size[0] * thumb.size[1])
         new_content = BytesIO()
         img_format = img.format if self.field.force_format is None else self.field.force_format
+        thumb = thumb.convert("RGB")
         thumb.save(new_content, format=img_format, quality=self.field.quality, **img.info)
         new_content = ContentFile(new_content.getvalue())
 
